@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Students</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        table {
+            width: 60%;
+            border-collapse: collapse;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px auto;
+        }
+
+        th, td {
+            padding: 12px 20px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            vertical-align: middle; /* Ensure vertical alignment */
+        }
+
+        th {
+            background-color: #007bff;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        td input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+            vertical-align: middle; /* Align checkboxes vertically */
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        tr td:first-child {
+            width: 50px; /* Adjust checkbox column width */
+            text-align: center; /* Center checkboxes horizontally */
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Select</th>
+                <th>Student Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+                <tr>
+                    <td>
+                        <input type="checkbox" name="student_ids" value="{{ student.id }}">
+                    </td>
+                    <td>{{ student.username }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Apply{% endblock %}
+
+{% block content %}
+    <div class="apply-container">
+        <h2>Apply for Job/Admission</h2>
+        <form action="{{ url_for('apply') }}" method="POST" class="apply-form">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            
+            <label for="role">Role:</label>
+            <select id="role" name="role" required>
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+            </select>
+            
+            <button type="submit" class="submit-btn">Submit Application</button>
+        </form>
+    </div>
+
+    <style>
+        body {
+            background-image: url('https://static.zollege.in/public/college_data/images/campusimage/1522147122Auditorium.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        .apply-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 400px;
+            margin: 60px auto;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .apply-container h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .apply-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .apply-form label {
+            text-align: left;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .apply-form input, .apply-form select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            transition: border 0.3s;
+        }
+
+        .apply-form input:focus, .apply-form select:focus {
+            border-color: #007bff;
+            outline: none;
+            background-color: #fff;
+        }
+
+        .submit-btn {
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+{% endblock %}

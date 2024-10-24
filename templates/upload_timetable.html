@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Timetable{% endblock %}
+
+{% block content %}
+    <style>
+        .upload-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-container h2 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .form-group input[type="file"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+
+        .upload-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .upload-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .file-list {
+            margin-top: 30px;
+        }
+
+        .file-list h3 {
+            color: #343a40;
+            margin-bottom: 15px;
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #e9ecef;
+            margin-bottom: 10px;
+        }
+
+        .file-item a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .file-item a:hover {
+            text-decoration: underline;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+
+    <div class="upload-container">
+        <h2>Upload Timetable</h2>
+        <form action="{{ url_for('upload_timetable') }}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Timetable (PDF format):</label>
+                <input type="file" id="file" name="file" accept=".pdf" required>
+            </div>
+            <button type="submit" class="upload-btn">Upload</button>
+        </form>
+
+        <!-- List of uploaded files -->
+        <div class="file-list">
+            <h3>Uploaded Timetables</h3>
+            {% if timetables %}
+                <ul>
+                    {% for timetable in timetables %}
+                        <li class="file-item">
+                            <a href="{{ url_for('static', filename=timetable.file_path) }}" target="_blank">{{ timetable.file_path }}</a>
+                            <form action="{{ url_for('delete_timetable_file', timetable_id=timetable['id']) }}" method="POST">
+                                <button type="submit">Delete</button>
+                            </form>                            
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No timetables uploaded yet.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

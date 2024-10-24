@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Students and Teachers</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+    body {
+    font-family: 'Arial', sans-serif;
+    background-image: url('https://cache.careers360.mobi/media/article_images/2024/5/29/Untitled_design.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6); /* Dark overlay for background only */
+    z-index: -1; /* Push the overlay behind the form container */
+}
+
+        h2 {
+            text-align: center;
+            color: #0b0101;
+            text-emphasis-color: black;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        form {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9); /* Keep the form background white and opaque */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 100%;
+    z-index: 1;
+}
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            background: #f9f9f9;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        #student_list {
+            margin-top: 20px;
+        }
+
+        #fetch_students {
+            background: #28a745;
+            color: #fff;
+            border: none;
+        }
+
+        #fetch_students:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        <h2>Manage Students and Teachers</h2>
+        
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" placeholder="Enter Subject" required>
+        
+        <label for="year">Year:</label>
+        <input type="text" id="year" name="year" placeholder="Enter Year" required>
+        
+        <label for="batch">Batch:</label>
+        <input type="text" id="batch" name="batch" placeholder="Enter Batch" required>
+        
+        <label for="teacher_id">Teacher:</label>
+        <select id="teacher_id" name="teacher_id" required>
+            <option value="" disabled selected>Select Teacher</option>
+            {% for teacher in teachers %}
+                <option value="{{ teacher.id }}">{{ teacher.username }}</option>
+            {% endfor %}
+        </select>
+        
+        <button type="button" id="fetch_students">Select Students</button>
+        <div id="student_list">
+            <!-- Students will be dynamically populated here -->
+        </div>
+        
+        <button type="submit">Submit Class</button>
+    </form>
+
+    <script>
+        $(document).ready(function(){
+            $('#fetch_students').on('click', function(){
+                $.get('{{ url_for("get_students") }}', function(data) {
+                    $('#student_list').html(data);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
